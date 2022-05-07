@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://maps.googleapis.com/maps/api/js?libraries=places&callback=initAutocomplete&language=eng&output=json&key=[YOUR-API-KEY]" async defer></script>
+    <title>map</title>
+</head>
+<body>
+    <div>
+        <input type="text" id="address1">
+        <input type="text" id="lat1" value="" readonly> 
+        <input type="text" id="lng1" value="" readonly>
+        <button onclick="addLatAndLong()">Cal.Location</button>
+        
+    </div>
+    <div>
+        <input type="text" id="address2">
+        <input type="text" id="lat2" value="" readonly> 
+        <input type="text" id="lng2" value="" readonly>
+    </div>
+    <div>
+        <p id="output1"></p>
+    </div>
+
+</body>
+<script type="text/javascript">
+    function addLatAndLong(){
+        let latitude1 = document.getElementById("lat1").value;
+        let longitude1 = document.getElementById("lng1").value;
+        let latitude2 = document.getElementById("lat2").value;
+        let longitude2 = document.getElementById("lng2").value;
+        let R = 6371; // km
+        let dLat = toRad(latitude2 - latitude1);
+        let dLon = toRad(longitude2 - longitude1);
+        latitude1 = toRad(latitude1);
+        latitude2 = toRad(latitude2);
+
+        let a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(latitude1) * Math.cos(latitude2);
+        let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        let diff = R * c;
+        let percent = ((33/100)*diff);
+        let result = diff + percent;
+
+        function toRad(Value) {
+        return Value * Math.PI / 180;
+    }
+
+        document.getElementById("output1").innerHTML = ("Total of " + Math.ceil(result) + " K.M");
+
+    }
+  function initAutocomplete() {
+
+
+    var address1 = document.getElementById('address1');
+    var address2 = document.getElementById('address2');
+    var options = {
+    componentRestrictions: {country: ['ng']}
+  };
+
+    var autocomplete = new google.maps.places.Autocomplete(address1, options);
+    var autocomplete2 = new google.maps.places.Autocomplete(address2, options);
+
+    autocomplete.addListener('place_changed', function() {
+      var place = autocomplete.getPlace();
+      var lat1 = place.geometry.location.lat();
+      var lng1 = place.geometry.location.lng();
+      document.getElementById('lat1').value = lat1;
+      document.getElementById('lng1').value = lng1;
+      
+    });
+
+    autocomplete2.addListener('place_changed', function() {
+      var place = autocomplete2.getPlace();
+      var lat2 = place.geometry.location.lat();
+      var lng2 = place.geometry.location.lng();
+      document.getElementById('lat2').value = lat2;
+      document.getElementById('lng2').value = lng2;
+      
+    });
+    
+}
+   
+</script>
+
+<!-- 
+    //Home Information
+$lat = 6.52813169;
+$lng = 3.27779169;
+
+// Only show places within 20km
+$distance = 20;
+
+//To find data between the range of 20km
+SELECT lat,lng, ((2 * atan2(sqrt((sin((RADIANS(6.52813169 - lat)) / 2) * sin((RADIANS(6.52813169 - lat)) / 2) + sin((RADIANS(3.27779169 - lng)) / 2) * sin((RADIANS(3.27779169 - lng)) / 2) * cos(lat) * cos(6.52813169))), sqrt(1 - (sin((RADIANS(6.52813169 - lat)) / 2) * sin((RADIANS(6.52813169 - lat)) / 2) + sin((RADIANS(3.27779169 - lng)) / 2) * sin((RADIANS(3.27779169 - lng)) / 2) * cos(lat) * cos(6.52813169))))) * 6371) AS distance,name FROM info HAVING distance < 20 ORDER BY distance ASC 
+-->
+</html>
+
