@@ -12,7 +12,6 @@
         <input type="text" id="lat1" value="" readonly> 
         <input type="text" id="lng1" value="" readonly>
         <button onclick="addLatAndLong()">Cal.Location</button>
-        
     </div>
     <div>
         <input type="text" id="address2">
@@ -81,19 +80,8 @@
     });
     
 }
-   
+    
 </script>
 
-<!-- 
-    //Home Information
-$lat = 6.52813169;
-$lng = 3.27779169;
-
-// Only show places within 20km
-$distance = 20;
-
-//To find data between the range of 20km
-SELECT lat,lng, ((2 * atan2(sqrt((sin((RADIANS(6.52813169 - lat)) / 2) * sin((RADIANS(6.52813169 - lat)) / 2) + sin((RADIANS(3.27779169 - lng)) / 2) * sin((RADIANS(3.27779169 - lng)) / 2) * cos(lat) * cos(6.52813169))), sqrt(1 - (sin((RADIANS(6.52813169 - lat)) / 2) * sin((RADIANS(6.52813169 - lat)) / 2) + sin((RADIANS(3.27779169 - lng)) / 2) * sin((RADIANS(3.27779169 - lng)) / 2) * cos(lat) * cos(6.52813169))))) * 6371) AS distance,name FROM info HAVING distance < 20 ORDER BY distance ASC 
--->
 </html>
 
