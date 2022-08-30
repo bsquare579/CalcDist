@@ -40,6 +40,7 @@
         let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         let diff = R * c;
         let percent = ((33/100)*diff);
+        //for non straight line calculation i.e driving
         let result = diff + percent;
 
         function toRad(Value) {
